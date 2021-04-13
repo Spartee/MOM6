@@ -1257,7 +1257,7 @@ subroutine MEKE_init(Time, G, US, param_file, diag, CS, MEKE, restart_CS, use_me
                  "Determine the where EKE comes from:\n" // &
                  "  'prog': Calculated solving EKE equation\n"// &
                  "  'file': Read in from a file\n"            // &
-                 "  'smartredis': Retrieved from SmartRedis", default='prog')
+                 "  'sr': Retrieved from SmartRedis", default='sr')
 
   select case (lowercase(eke_source_str))
     case("file")
@@ -1277,7 +1277,7 @@ subroutine MEKE_init(Time, G, US, param_file, diag, CS, MEKE, restart_CS, use_me
 
       eke_filename = trim(CS%inputdir) // trim(CS%eke_file)
       CS%id_eke = init_external_field(eke_filename, CS%eke_var_name, domain=G%Domain%mpp_domain)
-    case ("smartredis")
+    case ("sr")
       CS%id_client_init = cpu_clock_id('(SmartRedis client init)', grain=CLOCK_ROUTINE)
       CS%eke_src = EKE_SMARTREDIS
       CS%n_predictands = 0
@@ -1297,13 +1297,13 @@ subroutine MEKE_init(Time, G, US, param_file, diag, CS, MEKE, restart_CS, use_me
       call get_param(param_file, mdl, "BATCH_SIZE", batch_size, &
                    "Batch size to use for inference", default=1)
 
-      call get_param(param_file, mdl, "SmartRedis_MODEL", model_filename, &
+      call get_param(param_file, mdl, "SMARTREDIS_MODEL", model_filename, &
                      "Filename of the a saved pyTorch model to use", default='')
       if (len_trim(model_filename) > 0 .and. is_root_pe()) then
         call CS%smartredis%set_model_from_file(CS%model_key, trim(CS%inputdir)//trim(model_filename), "TORCH", "GPU", &
                                          batch_size=batch_size)
       endif
-      call get_param(param_file, mdl, "SmartRedis_PREPROCESS_SCRIPT", script_filename, &
+      call get_param(param_file, mdl, "SMARTREDIS_PREPROCESS_SCRIPT", script_filename, &
                      "Filename of the preprocessing script", default='')
       if (len_trim(script_filename) > 0 .and. is_root_pe()) then
         call CS%smartredis%set_script_from_file(CS%script_key, "GPU", trim(CS%inputdir)//script_filename)

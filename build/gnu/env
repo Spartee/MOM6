@@ -1,3 +1,4 @@
+module list
 module unload PrgEnv-pgi
 module unload PrgEnv-pathscale
 module unload PrgEnv-intel
@@ -8,3 +9,5 @@ module load PrgEnv-gnu
 module unload netcdf
 module load cray-netcdf
 module load cray-hdf5
+module unload gcc
+module load gcc/8.3.0

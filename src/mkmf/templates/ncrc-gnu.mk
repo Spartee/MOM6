@@ -44,7 +44,7 @@ NETCDF =             # If value is '3' and CPPDEFS contains
 
 INCLUDES =           # A list of -I Include directories to be added to the
                      # the compile command.
-INCLUDES = -I/lus/scratch/ashao/dev/silc/build
+INCLUDES = -I$(SMARTREDIS_INSTALL_PATH)/build
 
 COVERAGE =           # Add the code coverage compile options.
 
@@ -126,11 +126,10 @@ LDFLAGS_COVERAGE :=
 
 # Start with a blank LIBS
 LIBS =
-SILC_PATH = /lus/scratch/ashao/dev/silc/
-LIBS += -L$(SILC_PATH)/build -lsilc
-LIBS += -L$(SILC_PATH)/third-party/protobuf/install/lib -lprotobuf -lprotoc
-LIBS += -L$(SILC_PATH)/third-party/redis-plus-plus/install/lib -lredis++
-LIBS += -L$(SILC_PATH)/third-party/redis/deps/hiredis -lhiredis
+LIBS += -L$(SMARTREDIS_INSTALL_PATH)/build -lsmartredis
+LIBS += -L$(PROTOBUF_INSTALL_PATH)/lib -lprotobuf -lprotoc
+LIBS += -L$(REDISPP_INSTALL_PATH)/lib -lredis++
+LIBS += -L$(HIREDIS_INSTALL_PATH)/lib -lhiredis
 LIBS+= -lstdc++
 
 # Get compile flags based on target macros.

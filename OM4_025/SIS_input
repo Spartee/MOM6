@@ -15,7 +15,7 @@ CONSTANT_COSZEN_IC = 0.0        !   [nondim] default = -1.0
                                 ! A constant value to use to initialize the cosine of the solar zenith angle for
                                 ! the first radiation step, or a negative number to use the current time and
                                 ! astronomy.
-DO_ICEBERGS = True              !   [Boolean] default = False
+DO_ICEBERGS = False             !   [Boolean] default = False
                                 ! If true, call the iceberg module.
 
 ! === module MOM_domains ===
